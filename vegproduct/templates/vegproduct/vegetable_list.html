@@ -42,7 +42,19 @@
 </head>
 <body>
     <div class="container">
-        <h1>Vegetable Shop</h1>
+            <!-- Navigation -->
+    <nav>
+        <ul>
+            {% if user.is_authenticated %}
+                <li>Welcome, {{ user.username }}!</li>
+                <li><a href="{% url 'userdetails:profile' %}">Profile</a></li>
+                <li><a href="{% url 'userdetails:logout' %}">Logout</a></li>
+            {% else %}
+                <li><a href="{% url 'userdetails:login' %}">Login</a></li>
+                <li><a href="{% url 'userdetails:register' %}">Register</a></li>
+            {% endif %}
+        </ul>
+    </nav>
         
         <!-- Search Bar -->
         <form method="get" class="search-bar">
@@ -63,10 +75,7 @@
                     <p>{{ vegetable.description|truncatewords:10 }}</p>
                     <p><strong>Price:</strong> ${{ vegetable.price }}</p>
                     <p><strong>Stock:</strong> {{ vegetable.stock }}</p>
-                    <form method="post" action="{% url 'add_to_cart' vegetable.pk %}">
-                        {% csrf_token %}
-                        <button type="submit">Add to Cart</button>
-                    </form>
+                
                 </div>
             {% endfor %}
         </div>

@@ -1,0 +1,18 @@
+<!-- accounts/templates/accounts/profile.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ user.username }}'s Profile</title>
+</head>
+<body>
+    <h2>{{ user.username }}'s Profile</h2>
+
+    <p>Email: {{ user.email }}</p>
+    <p>Joined on: {{ user.date_joined }}</p>
+
+
+    <p><a href="{% url 'vegproduct:vegetable_list' %}">Back to Anime List</a></p>
+</body>
+</html>
