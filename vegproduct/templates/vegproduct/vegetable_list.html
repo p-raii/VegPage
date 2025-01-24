@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vegetable Shop</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            max-width: 800px;
+            margin: auto;
+        }
+        .search-bar {
+            margin-bottom: 20px;
+        }
+        .vegetable-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        .vegetable-item {
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 15px;
+            width: 200px;
+            text-align: center;
+        }
+        .vegetable-item img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 5px;
+        }
+        .vegetable-item h3 {
+            margin: 10px 0;
+        }
+        .vegetable-item p {
+            margin: 5px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Vegetable Shop</h1>
+        
+        <!-- Search Bar -->
+        <form method="get" class="search-bar">
+            <input type="text" name="q" placeholder="Search vegetables..." value="{{ query }}">
+            <button type="submit">Search</button>
+        </form>
+        
+        <!-- Vegetable List -->
+        <div class="vegetable-list">
+            {% for vegetable in vegetables %}
+                <div class="vegetable-item">
+                    {% if vegetable.image %}
+                        <img src="{{ vegetable.image.url }}" alt="{{ vegetable.name }}">
+                    {% else %}
+                        <img src="https://via.placeholder.com/150" alt="No image">
+                    {% endif %}
+                    <h3>{{ vegetable.name }}</h3>
+                    <p>{{ vegetable.description|truncatewords:10 }}</p>
+                    <p><strong>Price:</strong> ${{ vegetable.price }}</p>
+                    <p><strong>Stock:</strong> {{ vegetable.stock }}</p>
+                    <form method="post" action="{% url 'add_to_cart' vegetable.pk %}">
+                        {% csrf_token %}
+                        <button type="submit">Add to Cart</button>
+                    </form>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</body>
+</html>
