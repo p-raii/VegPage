@@ -62,10 +62,10 @@
             <button type="submit">Search</button>
             <br><br>
             Category<br>
-            <button type="submit" name="q" value="Herb/Leafy Green">Herb/Leafy Green</button>
+            <button type="submit" name="q" value="Herb Leafy Green">Herb/Leafy Green</button>
             <button type="submit" name="q" value="Fruit Vegetable">Fruit Vegetable</button>
             <button type="submit" name="q" value="Root Vegetable">Root Vegetable</button>
-            <button type="submit" name="q" value="Root/Spice">Root/Spice</button>
+            <button type="submit" name="q" value="Root Spice">Root/Spice</button>
             <button type="submit" name="q" value="">All Vegetable</button>
 
         </form>
@@ -86,7 +86,9 @@
                     <p>{{ vegetable.description|truncatewords:10 }}</p>
                     <p><strong>Price:</strong> ${{ vegetable.price }}</p>
                     <p><strong>Stock:</strong> {{ vegetable.stock }}</p>
-                
+
+                    <a href="{% url 'add_to_cart' vegetable.id %}">Add to Cart</a>
+
                 </div>
             {% endfor %}
         </div>

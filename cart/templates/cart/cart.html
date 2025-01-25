@@ -1,0 +1,33 @@
+<h1>Your Cart</h1>
+<table>
+    <thead>
+        <tr>
+            <th>Vegetable</th>
+            <th>Quantity</th>
+            <th>Price</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for item in cart_items %}
+        <tr>
+            <td>{{ item.vegetable.name }}</td>
+
+            <td>
+                <form method="POST" action="{% url 'update_cart' item.id %}">
+                    {% csrf_token %}
+                    <input type="number" name="quantity" value="{{ item.quantity }}" min="1">
+                    <button type="submit">Update</button>
+                </form>
+            </td>
+            <td>{{ item.total_price }}</td>
+            <td>
+                <a href="{% url 'remove_from_cart' item.id %}">Remove</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+<p>Total: {{ total }}</p>
+<a href="{% url 'vegproduct:vegetable_list' %}">contiue shopping</a>
+<a href="{% url 'checkout' %}">Proceed to Checkout</a>
