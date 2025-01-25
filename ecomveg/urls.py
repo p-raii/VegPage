@@ -24,6 +24,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('vegproduct.urls', namespace='vegproduct')),
     path('userdetails/', include('userdetails.urls', namespace='userdetails')),
+
 ]
 
 if settings.DEBUG:
