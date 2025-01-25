@@ -1,33 +1,64 @@
-<h1>Your Cart</h1>
-<table>
-    <thead>
-        <tr>
-            <th>Vegetable</th>
-            <th>Quantity</th>
-            <th>Price</th>
-            <th>Actions</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for item in cart_items %}
-        <tr>
-            <td>{{ item.vegetable.name }}</td>
+<!-- cart/templates/cart.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Cart</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
 
-            <td>
-                <form method="POST" action="{% url 'update_cart' item.id %}">
-                    {% csrf_token %}
-                    <input type="number" name="quantity" value="{{ item.quantity }}" min="1">
-                    <button type="submit">Update</button>
-                </form>
-            </td>
-            <td>{{ item.total_price }}</td>
-            <td>
-                <a href="{% url 'remove_from_cart' item.id %}">Remove</a>
-            </td>
-        </tr>
-        {% endfor %}
-    </tbody>
-</table>
-<p>Total: {{ total }}</p>
-<a href="{% url 'vegproduct:vegetable_list' %}">contiue shopping</a>
-<a href="{% url 'checkout' %}">Proceed to Checkout</a>
+    <div class="container mt-5">
+        <h1 class="text-center mb-4" style="font-family: Comic Sans MS;">Your Cart</h1>
+
+        <div class="card shadow-lg">
+            <div class="card-header bg-dark text-white">
+                <h3 class="card-title text-center" style="font-family: Comic Sans MS;">Cart Items</h3>
+            </div>
+            <div class="card-body">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th style="font-family: Comic Sans MS;">Vegetable</th>
+                            <th style="font-family: Comic Sans MS;">Quantity</th>
+                            <th style="font-family: Comic Sans MS;">Price</th>
+                            <th style="font-family: Comic Sans MS;">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for item in cart_items %}
+                        <tr>
+                            <td>{{ item.vegetable.name }}</td>
+
+                            <td>
+                                <form method="POST" action="{% url 'update_cart' item.id %}">
+                                    {% csrf_token %}
+                                    <input type="number" name="quantity" value="{{ item.quantity }}" min="1" class="form-control w-25">
+                                    <button type="submit" class="btn btn-dark bg-dark btn-sm mt-2" style="font-family: Comic Sans MS;">Update</button>
+                                </form>
+                            </td>
+                            <td>{{ item.total_price }}</td>
+                            <td>
+                                <a href="{% url 'remove_from_cart' item.id %}" class="btn btn-danger btn-sm" style="font-family: Comic Sans MS;">Remove</a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+
+                <div class="d-flex justify-content-between">
+                    <p><strong>Total: {{ total }}</strong></p>
+                    <div>
+                        <a href="{% url 'vegproduct:vegetable_list' %}" class="btn btn-secondary">Continue Shopping</a>
+                        <a href="{% url 'checkout' %}" class="btn btn-success">Proceed to Checkout</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+  
+</body>
+</html>

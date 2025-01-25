@@ -5,16 +5,31 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ user.username }}'s Profile</title>
+    <style>
+    .nav-text{
+        font-family: Comic Sans MS;
+        color:rgb(8, 8, 8);}</style>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-    <h2>{{ user.username }}'s Profile</h2>
 
-    <p>Email: {{ user.email }}</p>
-    <p>Joined on: {{ user.date_joined }}</p>
+    <div class="container mt-5">
+        <div class="card shadow-lg">
+            <div class="card-header bg-dark text-white">
+                <h3 class="card-title text-center nav-text">{{ user.username }}'s Profile</h3>
+            </div>
+            <div class="card-body">
+                <p><strong>Email:</strong> {{ user.email }}</p>
+                <p><strong>Joined on:</strong> {{ user.date_joined }}</p>
+            </div>
+            <div class="card-footer text-center">
+                <a href="{% url 'vegproduct:vegetable_list' %}" class="btn btn-secondary">Go Back</a>
+                <a href="{% url 'view_cart' %}" class="btn btn-warning">View Shopping Cart</a>
+            </div>
+        </div>
+    </div>
 
-
-    <p><a href="{% url 'vegproduct:vegetable_list' %}">Go Back</a></p>
-    <p><a href="{% url 'view_cart' %}">View Shopping Cart</a></p>
 
 </body>
 </html>
