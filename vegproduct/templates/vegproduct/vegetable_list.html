@@ -105,8 +105,8 @@
                     {% endif %}
                     <h3>{{ vegetable.name }}</h3>
                     <p>{{ vegetable.description|truncatewords:10 }}</p>
-                    <p><strong>Price:</strong> ${{ vegetable.price }}</p>
-                    <p><strong>Stock:</strong> {{ vegetable.stock }}</p>
+                    <p><strong>Price:</strong> NRP{{ vegetable.price }}</p>
+                    <p><strong>Stock(in kg):</strong> {{ vegetable.stock }}</p>
 
                     <a href="{% url 'add_to_cart' vegetable.id %}">Add to Cart</a>
 

@@ -16,7 +16,11 @@ class CartItem(models.Model):
 
 class Order(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
+    phone_number = models.CharField(max_length=15,null=True)  # Add phone number field
+    address = models.TextField(null=True)
+    status = models.TextField(default="Not Processed")
     total_price = models.DecimalField(max_digits=10, decimal_places=2)
+    items = models.JSONField(default=list)
     created_at = models.DateTimeField(auto_now_add=True)
     is_new = models.BooleanField(default=True)  # Mark new orders as True
     

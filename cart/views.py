@@ -39,22 +39,37 @@ def update_cart(request, item_id):
 
 @login_required
 def checkout(request):
-    cart_items = CartItem.objects.filter(user=request.user)
+    if request.method == 'POST':
+        phone_number = request.POST.get('phone_number')
+        address = request.POST.get('address')
 
-    if not cart_items.exists():
-        return redirect('view_cart')
+        if not phone_number or not address:
+            return render(request, 'cart/checkout.html', {'error': "Phone number and address are required!"})
+        cart_items = CartItem.objects.filter(user=request.user)
+        total_price = sum(item.quantity * item.vegetable.price for item in cart_items)
 
-    total_price = sum(item.quantity * item.vegetable.price for item in cart_items)
+        # Collect item details
+        item_list = []
+        for item in cart_items:
+            item_list.append({
+                'name': item.vegetable.name,
+                'quantity': item.quantity
+            })
 
-    # Create the order and mark as new
-    Order.objects.create(
-        user=request.user,
-        total_price=total_price,
-        is_new=True  # New order
-    )
+        # Create an order
+        order = Order.objects.create(
+            user=request.user,
+            total_price=total_price,
+            phone_number=phone_number,
+            address=address,
+            items=item_list
+        )
 
-    # Clear the cart
-    cart_items.delete()
+        # Move items from cart to order (optional logic to handle cart items)
 
-    return redirect('view_cart')
+        cart_items.delete()  # Clear the cart after order is placed
+
+        return redirect('view_cart') # Replace with your success page
+
+    return render(request, 'cart/checkout.html')
 
